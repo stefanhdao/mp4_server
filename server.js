@@ -110,6 +110,7 @@ userRoute.get(function(req, res) {
 
   	if(err)
   	{
+  		console.log('we hit 500 in /users')
   		res.status(500).send({message: 'Could not get users!'})
   	}
   	else
@@ -139,7 +140,7 @@ userRoute.post(function(req, res){
 			}
 			else
 			{
-				res.status(200).json({message: 'User created!', data : user});
+				res.status(201).json({message: 'User created!', data : user});
 			}
 		});
 	}
@@ -306,7 +307,7 @@ taskRoute.post(function(req, res){
 		}
 		else
 		{
-			res.status(200).json({message: 'Task created!', data: task });
+			res.status(201).json({message: 'Task created!', data: task });
 			if(task.assignedUser != "")
 			{
 				User.findById(task.assignedUser, function(err, user){
