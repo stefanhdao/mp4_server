@@ -412,11 +412,11 @@ taskSpecificRoute.delete(function(req, res){
 	}, function(err, task){
 		if(err)
 		{
-			res.status(404).send({message: 'User does not exist!'})
+			res.status(404).send({message: 'Task does not exist!'})
 		}
 		else if (task.result.n === 0)
 		{
-			res.status(404).send({message: 'User does not exist!'})
+			res.status(404).send({message: 'Task does not exist!'})
 		}
 		else
 		{
