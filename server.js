@@ -325,6 +325,8 @@ taskRoute.post(function(req, res){
 		else
 		{
 			res.status(201).json({message: 'Task created!', data: task });
+
+			/*
 			if(task.assignedUser != "")
 			{
 				User.findById(task.assignedUser, function(err, user){
@@ -349,6 +351,7 @@ taskRoute.post(function(req, res){
 
 				});
 			}
+			*/
 		}
 	});
 });
@@ -403,13 +406,17 @@ taskSpecificRoute.put(function(req, res){
 	});
 });
 
-userSpecificRoute.delete(function(req, res){
+taskSpecificRoute.delete(function(req, res){
 	Task.remove({
 		_id: req.params.task_id
 	}, function(err, task){
 		if(err)
 		{
-			res.status(505).send({message: 'Could not find task!'})
+			res.status(404).send({message: 'User does not exist!'})
+		}
+		else if (task.result.n === 0)
+		{
+			res.status(404).send({message: 'User does not exist!'})
 		}
 		else
 		{
