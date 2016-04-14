@@ -156,8 +156,13 @@ userRoute.options(function(req, res){
 
 userSpecificRoute.get(function(req, res){
 	User.findById(req.params.user_id, function(err, user){
+
 		if(err)
 		{
+  		res.status(404).send({message: 'User does not exist!'})
+  	}
+  	else if(user === null)
+  	{
   		res.status(404).send({message: 'User does not exist!'})
   	}
   	else
@@ -169,6 +174,7 @@ userSpecificRoute.get(function(req, res){
 
 userSpecificRoute.put(function(req, res){
 	User.findById(req.params.user_id, function(err, user){
+
 		if (err)
 		{
 			res.status(404).send({message: 'User does not exist!'})
@@ -197,11 +203,20 @@ userSpecificRoute.delete(function(req, res){
 	User.remove({
 		_id: req.params.user_id
 	}, function(err, user){
+
+		console.log('hola')
+		console.log(user);
+		console.log(err);
+
+
 		if (err)
 		{
 			res.status(404).send({message: 'User does not exist!'})
 		}
-
+		else if (user.result.n === 0)
+		{
+			res.status(404).send({message: 'User does not exist!'})
+		}
 		else
 		{
 			res.status(200).json({message: 'User deleted!'});
