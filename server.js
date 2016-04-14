@@ -115,6 +115,7 @@ userRoute.get(function(req, res) {
   	}
   	else
   	{
+  		console.log('we hit 200 in /users')
   		res.status(200).json({message: 'Ok!', data : users});
   	}
 
