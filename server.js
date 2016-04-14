@@ -106,20 +106,39 @@ userRoute.get(function(req, res) {
 	}
 
 
-  User.find(where).limit(limit).sort(sort).exec(function(err, users) {
+	if(count != null)
+	{
 
-  	if(err)
-  	{
-  		console.log('we hit 500 in /users')
-  		res.status(500).send({message: 'Could not get users!'})
-  	}
-  	else
-  	{
-  		console.log('we hit 200 in /users')
-  		res.status(200).json({message: 'Ok!', data : users});
-  	}
+	  User.find(where).limit(limit).sort(sort).select(select).skip(skip).count(count).exec(function(err, users) {
 
-  });
+	  	if(err)
+	  	{
+	  		console.log('we hit 500 in /users')
+	  		res.status(500).send({message: 'Could not get users!'})
+	  	}
+	  	else
+	  	{
+	  		console.log('we hit 200 in /users')
+	  		res.status(200).json({message: 'Ok!', data : users});
+	  	}
+ 	 });
+	}
+	else
+	{
+		User.find(where).limit(limit).sort(sort).select(select).skip(skip).exec(function(err, users) {
+
+	  	if(err)
+	  	{
+	  		console.log('we hit 500 in /users')
+	  		res.status(500).send({message: 'Could not get users!'})
+	  	}
+	  	else
+	  	{
+	  		console.log('we hit 200 in /users')
+	  		res.status(200).json({message: 'Ok!', data : users});
+	  	}
+ 	 });
+	}
 });
 
 userRoute.post(function(req, res){
@@ -266,17 +285,35 @@ taskRoute.get(function(req, res) {
 	}
 
 
-  Task.find(where).limit(limit).sort(sort).exec(function(err, tasks){
+	if(count != null)
+	{
 
-  	if(err)
-  	{
-  		res.status(500).send({message: 'Could not get tasks!'})
-  	}
-  	else
-  	{
-  		res.status(200).json({message: 'Ok!', data : tasks});
-  	}
-  });
+	  Task.find(where).limit(limit).sort(sort).select(select).skip(skip).count(count).exec(function(err, tasks){
+
+	  	if(err)
+	  	{
+	  		res.status(500).send({message: 'Could not get tasks!'})
+	  	}
+	  	else
+	  	{
+	  		res.status(200).json({message: 'Ok!', data : tasks});
+	  	}
+	  });
+	}
+	else
+	{
+		Task.find(where).limit(limit).sort(sort).select(select).skip(skip).exec(function(err, tasks){
+
+	  	if(err)
+	  	{
+	  		res.status(500).send({message: 'Could not get tasks!'})
+	  	}
+	  	else
+	  	{
+	  		res.status(200).json({message: 'Ok!', data : tasks});
+	  	}
+	  });
+	}
 });
 
 
