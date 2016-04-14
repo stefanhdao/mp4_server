@@ -10,7 +10,7 @@ var router = express.Router();
 //replace this with your Mongolab URL
 //mongoose.connect('mongodb://localhost/mp4');
 //mongoose.connect('mongodb://cs498:cs498@ds047865.mlab.com:47865/cs498_mp4_server')
-mongoose.connect('mongodb://sdao2:thisisunsecure@ds023530.mlab.com:23530/mp4_cs498rk_sdao2')
+mongoose.connect('mongodb://sdaotemp:thisisunsecure@ds023530.mlab.com:23530/mp4_cs498rk_sdao2')
 
 
 // Create our Express application
@@ -266,6 +266,7 @@ taskRoute.post(function(req, res){
 
 	var task = new Task();
 	task.name = req.body.name;
+	task.deadline = req.body.deadline;
 	task.completed = false;
 
 
@@ -306,6 +307,30 @@ taskRoute.post(function(req, res){
 		else
 		{
 			res.status(200).json({message: 'Task created!', data: task });
+			if(task.assignedUser != "")
+			{
+				User.findById(task.assignedUser, function(err, user){
+					if(err)
+					{
+						//res.status(401).send({message: 'Could not get user!'})
+					}
+					else
+					{
+						user.pendingTasks.push(task._id);
+						user.save(function(err){
+							if (err)
+							{
+								//res.status(500).send({message: 'Could not save user!'})
+							}
+							else
+							{
+								//res.status(200).json({message: 'Ok!', data : user})
+							}
+						});		
+					}
+
+				});
+			}
 		}
 	});
 });
