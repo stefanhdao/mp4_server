@@ -204,11 +204,6 @@ userSpecificRoute.delete(function(req, res){
 		_id: req.params.user_id
 	}, function(err, user){
 
-		console.log('hola')
-		console.log(user);
-		console.log(err);
-
-
 		if (err)
 		{
 			res.status(404).send({message: 'User does not exist!'})
@@ -233,6 +228,8 @@ taskRoute.get(function(req, res) {
 	var select = null;
 	var skip = null;
 	var limit = null;
+
+	console.log('hey!!')
 
 	if(req.query.where != undefined)
 	{
@@ -262,6 +259,10 @@ taskRoute.get(function(req, res) {
 	if(req.query.limit != undefined)
 	{
 		limit = eval("("+ req.query.limit + ")");
+	}
+	else
+	{
+		limit = eval("("+ 100 + ")");
 	}
 
 
